@@ -29,6 +29,8 @@ public class AlienController {
     private Button btnTranslate;
     @FXML
     private Button btnReset;
+    
+    private AlienDictionary ad = new AlienDictionary();
         
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -43,6 +45,38 @@ public class AlienController {
     
     @FXML
     void doTranslate(ActionEvent event) {
+    	String stringa = txtWord.getText();
+    	String[] array= stringa.split(" ");
+    	
+    	if(stringa.matches("[a-zA-Z ]+")==false) {
+			txtResult.appendText("Sono ammessi solo caratteri\n");
+			return;
+		}
+    	
+    	if(array.length>2) {
+    		txtResult.appendText("Hai inserito troppe parole\n");
+    	}
+    	else if(array.length == 2) {
+    		String aliena = array[0];
+    		String traduzione = array[1];
+    		
+    		
+    		
+    		
+    		ad.addWord(aliena, traduzione);
+    		txtResult.appendText("Hai inserito la traduzione della parola "+aliena+"\n");
+    	}
+    	else if(array.length==1) {
+    		String aliena = array[0];
+    		
+    		
+    		
+    		txtResult.appendText(ad.translateWord(aliena)+"\n");
+    		
+    		
+    	}
+    	
+    	txtWord.clear();
     	    	
     }
     
@@ -50,6 +84,10 @@ public class AlienController {
     @FXML
     void doReset(ActionEvent event) {
 
+    	txtResult.clear();
+    	txtWord.clear();
+    	
+    	
     }
     
 }
